@@ -10,7 +10,11 @@ fi
 apt update && apt -y dist-upgrade && apt -y autoremove
 
 # 2. Install required packages
-apt -y install hostapd dnsmasq
+apt -y install hostapd dnsmasq dhcpcd iptables git
+
+# Clone the repo
+git clone https://github.com/scidsg/pi-bridge.git
+cd /home/pi/pi-bridge
 
 # Stop services while configuring
 systemctl stop hostapd
@@ -47,16 +51,8 @@ dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
 EOL
 
 # 5. Configure network interfaces
-cat >> /etc/dhcpcd.conf << EOL
-interface eth0
-    static ip_address=192.168.1.2/24
-    static routers=192.168.1.1
-    static domain_name_servers=192.168.1.1
-
-interface wlan0
-    static ip_address=192.168.4.1/24
-    nohook wpa_supplicant
-EOL
+mv /etc/dhcpcd.conf /etc/dhcpcd.conf.old
+cp dhcpcd.conf /etc/dhcpcd.conf
 
 # Restart dhcpcd service
 service dhcpcd restart
