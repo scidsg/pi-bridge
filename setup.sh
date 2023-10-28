@@ -12,10 +12,6 @@ apt update && apt -y dist-upgrade && apt -y autoremove
 # 2. Install required packages
 apt -y install hostapd dnsmasq dhcpcd iptables git
 
-# Clone the repo
-git clone https://github.com/scidsg/pi-bridge.git
-cd /home/pi/pi-bridge
-
 # Stop services while configuring
 systemctl stop hostapd
 systemctl stop dnsmasq
@@ -87,6 +83,13 @@ sudo rfkill unblock wlan
 sudo systemctl enable hostapd
 sudo systemctl start hostapd
 systemctl start dnsmasq
+
+sudo ip addr add 192.168.0.2/24 dev eth0
+sudo ip link set eth0 down
+sudo ip link set eth0 up
+sudo route add default gw 192.168.0.1 eth0
+sudo systemctl restart networking
+sudo systemctl restart dhcpcd
 
 echo "Setup complete! Your Raspberry Pi should now be functioning as a wireless access point."
 echo "It might be a good idea to reboot the Raspberry Pi to ensure all changes are applied properly."
