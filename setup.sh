@@ -47,8 +47,7 @@ dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
 EOL
 
 # 5. Configure network interfaces
-mv /etc/dhcpcd.conf /etc/dhcpcd.conf.old
-cp dhcpcd.conf /etc/dhcpcd.conf
+cp /home/pi/pi-bridge/dhcpcd.conf /etc/dhcpcd.conf
 
 # Restart dhcpcd service
 service dhcpcd restart
