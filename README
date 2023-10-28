@@ -1,0 +1,15 @@
+# Pi Bridge
+
+A VPN wifi-ap
+
+1. Flash a new microSD with the following information:
+
+- Custom username
+- hostname: `pibridge`
+- Wifi information
+
+2. Boot up your Pi
+
+Log in to your Pi: `ssh username@pibridge.local`
+
+3. 
